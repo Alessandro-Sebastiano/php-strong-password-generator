@@ -1,3 +1,34 @@
+<?php
+
+$ascii_upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+$ascii_lower = 'abcdefghijklmnopqrstuvwxyz';
+$numbers = '0123456789';
+$symbols = '!#$%&\()*./:;?@\_~';
+
+$charArray = ['ascii_upper', 'ascii_lower', 'numbers', 'symbols',];
+
+$passwd = '';
+
+
+if (isset($_GET['length'])) {
+    if ($_GET['length'] >= 8 && $_GET['length'] < 50) {
+        $str_length = $_GET['length'];
+        echo $str_length;
+        while (strlen($passwd) <= $str_length) {
+            $random_number = rand(0, count($charArray) - 1);
+            $current_list = $charArray[$random_number];
+            $random_char = $$current_list[rand(0, strlen($$current_list) - 1)];
+            echo $random_char;
+            $passwd .= $random_char;
+            #echo $passwd;
+        }
+    } else {
+        $alert_danger = 'Numero non valido';
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +40,22 @@
     <title>Password Generator</title>
 </head>
 
-<body>
+<body class="bg-primary p-3">
+
+    <h1 class="text-white text-center">Password Generator</h1>
+
+    <div class="container bg-light p-3 rounded">
+        <form action="index.php" method="get">
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Lunghezza password</span>
+                <input type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="length">
+                <?php if (isset($alert_danger)) echo "<div class='text-danger col-12 p-2 text-center mb-2'>$alert_danger</div>" ?>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Invia</button>
+            <button type="reset" class="btn btn-secondary">Annulla</button>
+        </form>
+    </div>
 
 </body>
 

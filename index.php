@@ -9,18 +9,14 @@ $charArray = ['ascii_upper', 'ascii_lower', 'numbers', 'symbols',];
 
 $passwd = '';
 
-
 if (isset($_GET['length'])) {
     if ($_GET['length'] >= 8 && $_GET['length'] < 50) {
         $str_length = $_GET['length'];
-        echo $str_length;
-        while (strlen($passwd) <= $str_length) {
+        while (strlen($passwd) + 1 <= $str_length) {
             $random_number = rand(0, count($charArray) - 1);
             $current_list = $charArray[$random_number];
             $random_char = $$current_list[rand(0, strlen($$current_list) - 1)];
-            echo $random_char;
             $passwd .= $random_char;
-            #echo $passwd;
         }
     } else {
         $alert_danger = 'Numero non valido';
@@ -56,6 +52,8 @@ if (isset($_GET['length'])) {
             <button type="reset" class="btn btn-secondary">Annulla</button>
         </form>
     </div>
+
+    <p class="text-center p-3"><?php if ($passwd != '') echo 'Password: ' . $passwd ?></p>
 
 </body>
 
